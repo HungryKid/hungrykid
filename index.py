@@ -22,5 +22,6 @@ def internal_server_error(error):
     return render_template('500.html'), 500
 
 if __name__ == '__main__':
+    # If you enable debug support the server will reload itself on code changes 
+    app.debug = True
     app.run()
-    #app.run(debug=True)
