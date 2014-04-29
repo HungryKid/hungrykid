@@ -1,8 +1,21 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, session, url_for
+import urllib
+import urllib2
+import json
+
 app = Flask(__name__)
+app.secret_key = "INSERT HERE"
+
+FACEBOOK_APP_ID = "INSERT HERE"
+FACEBOOK_APP_SECRET = "INSERT HERE"
+SITE_URL = "INSERT HERE"
 
 @app.route('/')
 def index():
+    access_token = session.get('access_token')
+    if not access_token is None:
+        getUserFromFB()
+    
     return render_template('index.html')
 
 @app.route('/help')
@@ -11,7 +24,35 @@ def help():
 
 @app.route('/user/<username>')
 def userpage(username):
-    return 'This is %s\'s page ' % username
+    #return 'This is %s\'s page ' % username
+    return render_template('userpage.html')
+
+def getUserFromFB():
+    response = urllib2.urlopen('https://graph.facebook.com/me?' + session.get('access_token'))
+    user_json = json.loads(response.read())
+    session['userinfo'] = user_json # TODO use mysql?
+
+@app.route('/login')
+def login():
+    code = request.args.get('code')
+    args = dict(client_id=FACEBOOK_APP_ID, redirect_uri=SITE_URL+"login")
+    if code is None:
+        return redirect("https://graph.facebook.com/oauth/authorize?" + urllib.urlencode(args))
+    args["client_secret"] = FACEBOOK_APP_SECRET
+    args["code"] = code
+    response = urllib.urlopen("https://graph.facebook.com/oauth/access_token?" + urllib.urlencode(args))
+    print "res:", response
+    session['access_token'] = response.read()
+    return redirect(SITE_URL)
+
+@app.route('/logout')
+def logout():
+    session.pop('access_token', None)
+    session.pop('userinfo', None)
+    #flash('You were logged out')
+    return redirect(url_for('index'))
+
+###### ERROR HANDLER
 
 @app.errorhandler(404)
 def not_found(error):
@@ -23,5 +64,6 @@ def internal_server_error(error):
 
 if __name__ == '__main__':
     # If you enable debug support the server will reload itself on code changes 
+    # REMEMBER: You must not forget comment out below when deploy to production
     app.debug = True
     app.run()

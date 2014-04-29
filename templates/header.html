@@ -1,7 +1,7 @@
 <!doctype html>
-<title>Index Page</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='general.css') }}">
-	<h1>Sandwich Index Page</h1>
+<title>Sandwich</title>
+<div class=page>
+	<h1>Sandwich Userpage</h1>
 	{% if session.access_token %}
 		Welcome
 		{{ session.userinfo['username'] }}
@@ -10,3 +10,6 @@
 		you aren't logged in
 		<a href="{{ url_for('login') }}">login</a>
 	{% endif %}
+	{% block body %}{% endblock %}
+</div>
+
