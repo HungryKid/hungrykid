@@ -2,8 +2,8 @@ from flask import Flask, render_template, redirect, request, session, url_for
 import urllib
 import urllib2
 import json
-from sqlalchemy import create_engine, MetaData, Table, Column, types
-from sqlalchemy.orm import scoped_session, sessionmaker, mapper
+from sqlalchemy import create_engine,
+from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
 
 from user import User
