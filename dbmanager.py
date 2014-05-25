@@ -1,5 +1,5 @@
 from __init__ import engine
-from user import metadata
+from user import metadata, users
 
-# TODO if already created tables, drop it
+users.drop(engine)
 metadata.create_all(engine)

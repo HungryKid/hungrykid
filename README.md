@@ -89,3 +89,9 @@ $ python index.py
     $ pip freeze > packages.txt
 
     ```
+
+How to create database
+---------------------------------------------
+```
+$ python dbmanager.py
+```
