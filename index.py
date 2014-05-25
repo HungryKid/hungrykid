@@ -1,55 +1,54 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import Flask, render_template, redirect, request, session, url_for
 import urllib
 import urllib2
 import json
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
 
 from user import User
-
-engine = create_engine('mysql+pymysql://hungry:imhungry@localhost/sandwich', encoding='utf-8')
-
-Session = scoped_session(sessionmaker(autocommit=False, autoflush=False,bind=engine))
-sessions = Session()
+from __init__ import db_session
 
 app = Flask(__name__)
-app.secret_key = "INSERT HERE"
+app.secret_key = "fdsajiofs234joi" # TODO CHANGE THIS KEY(for Production Environment)
 
-FACEBOOK_APP_ID = "INSERT HERE"
-FACEBOOK_APP_SECRET = "INSERT HERE"
+FACEBOOK_APP_ID = "648211815249379"
+FACEBOOK_APP_SECRET = "SECRET" # TODO CHANGE THIS KEY
+
 SITE_URL = "http://sandwich.com:5000/"
 
 @app.route('/')
 def index():
     access_token = session.get('access_token')
+    user = None
     if not access_token is None:
-        getUserFromFB()
+        user = getUserFromFB()
     
-    return render_template('index.html')
+    return render_template('index.html', user=user)
 
+# TODO
 @app.route('/help')
 def help():
     return 'This is help page'
 
+# TODO
 @app.route('/user/<username>')
 def userpage(username):
-    #return 'This is %s\'s page ' % username
     return render_template('userpage.html')
-
 
 def getUserFromFB():
     response = urllib2.urlopen('https://graph.facebook.com/me?' + session.get('access_token'))
     user_json = json.loads(response.read())
     id = user_json["id"]
     try:
-        user = sessions.query(User).filter(User.id == id).one()
+        user = db_session.query(User).filter(User.id == id).one()
     except NoResultFound:
         # TODO Use transaction
-        sessions.add(User(id, user_json["name"]))
-        sessions.commit()
+        db_session.add(User(id, user_json["name"]))
+        db_session.commit()
 
-    session['userinfo'] = user_json # TODO use mysql?
+    return user_json
 
 
 @app.route('/login')

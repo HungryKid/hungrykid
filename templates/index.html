@@ -3,8 +3,10 @@
 <link href="{{ url_for('static', filename='css/general.css') }}">
 	<h1>Sandwich Index Page</h1>
 	{% if session.access_token %}
-		Welcome
-		{{ session.userinfo['username'] }}
+		Name:
+		{{ user["name"] }}
+		(ID:
+		{{ user["id"] }})
 		<a href="{{ url_for('logout') }}">logout</a>
 	{% else %}
 		you aren't logged in
