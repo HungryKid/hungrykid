@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, request, session, url_for
 import urllib
 import urllib2
 import json
-from sqlalchemy import create_engine,
+from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -41,12 +41,13 @@ def userpage(username):
 def getUserFromFB():
     response = urllib2.urlopen('https://graph.facebook.com/me?' + session.get('access_token'))
     user_json = json.loads(response.read())
-
+    id = user_json["id"]
     try:
-        user = sessions.query(User).filter(User.id == user_json["id"]).one()
+        user = sessions.query(User).filter(User.id == id).one()
     except NoResultFound:
-        print "NOUSER"
-        # TODO create user in DB 
+        # TODO Use transaction
+        sessions.add(User(id, user_json["name"]))
+        sessions.commit()
 
     session['userinfo'] = user_json # TODO use mysql?
 
