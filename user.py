@@ -13,7 +13,7 @@ class User(object):
 metadata = MetaData()
 
 users = Table('user', metadata,
-    Column('id', types.Integer, primary_key=True),
+    Column('id', types.BigInteger, primary_key=True),
     Column('name', types.String(50)),
 )
 
