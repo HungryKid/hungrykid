@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template, redirect, request, session, url_for
+from flask import Flask, render_template, redirect, request, session, url_for, Response, jsonify
 import urllib
 import urllib2
 import json
 from sqlalchemy.orm.exc import NoResultFound
 
 from user import User
+from shop import Shop
 from __init__ import db_session
 
 app = Flask(__name__)
 app.secret_key = "fdsajiofs234joi" # TODO CHANGE THIS KEY(for Production Environment)
 
 FACEBOOK_APP_ID = "648211815249379"
-FACEBOOK_APP_SECRET = "SECRET" # TODO CHANGE THIS KEY
+FACEBOOK_APP_SECRET = "xxx" # TODO CHANGE THIS KEY
 
 SITE_URL = "http://sandwich.com:5000/"
 
@@ -50,7 +51,25 @@ def getUserFromFB():
 
     return user_json
 
+###### API ######
+@app.route('/api/getshoplist')
+def getshoplist():
+    shops = db_session.query(Shop)[0:10]
+    shoplist = []
+    for row in shops:
+        # TODO: encoding
+        shopdict = {}
+        shopdict["id"] = row.id
+        shopdict["name"] = row.name
+        shopdict["type"] = row.type
+        shopdict["lat"] = row.latitude
+        shopdict["lng"] = row.longitude
+        shoplist.append(shopdict)
+    response = jsonify({'results' : shoplist})
+    response.status_code = 200
+    return response
 
+##### LOGIN/OUT #####
 @app.route('/login')
 def login():
     code = request.args.get('code')
@@ -73,7 +92,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-###### ERROR HANDLER
+###### ERROR HANDLER #####
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
