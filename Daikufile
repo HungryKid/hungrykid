@@ -1,0 +1,16 @@
+namespace db => sub {
+    desc 'データベースのセットアップ';
+    task setup => sub {
+        sh 'script/setup_db.sh';
+    };
+};
+
+namespace batch => sub {
+    desc 'ショップデータのクローリング';
+    task crawl => sub {
+        sh 'script/batch/hungrykid.py';
+    };
+};
+
+# 独自タスクは以下のファイルに定義すると捗りそう
+do 'Daikufile.local';
