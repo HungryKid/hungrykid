@@ -74,8 +74,21 @@ How to setup local development environment
     $ pip install -r packages.txt
     ```
 
-4. Bootstrapping with Daiku
-5. OAuth setup
+4. Setup DB
+
+    ```
+    $ daiku db:setup
+    ```
+
+5. Setup host
+
+    ```
+    $ sudo vi /etc/hosts
+
+    ...
+
+    127.0.0.1 sandwich.com
+    ```
 
 How to start local server
 ---------------------------------------------
