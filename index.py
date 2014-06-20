@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+import os
+root_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(root_dir, 'config'))
+
+#import production as config
+import development as config
+
 from flask import Flask, render_template, redirect, request, session, url_for, Response, jsonify
 import urllib
 import urllib2
@@ -12,12 +20,12 @@ from shop import Shop
 from __init__ import db_session
 
 app = Flask(__name__)
-app.secret_key = "fdsajiofs234joi" # TODO CHANGE THIS KEY(for Production Environment)
+app.secret_key = config.SECRET_KEY # TODO CHANGE THIS KEY(for Production Environment)
 
-FACEBOOK_APP_ID = "648211815249379"
-FACEBOOK_APP_SECRET = "xxx" # TODO CHANGE THIS KEY
+FACEBOOK_APP_ID = config.FACEBOOK_APP_ID
+FACEBOOK_APP_SECRET = config.FACEBOOK_APP_SECRET
 
-SITE_URL = "http://sandwich.com:5000/"
+SITE_URL = config.SITE_URL
 
 @app.route('/')
 def index():
