@@ -71,7 +71,7 @@ How to setup local development environment
 3. Install python module dependency
 
     ```
-    $ pip install -r packages.txt
+    $ pip install -r requirements.txt
     ```
 
 4. Setup DB
@@ -99,12 +99,6 @@ $ python index.py
 
 * Update dependency
     ```
-    $ pip freeze > packages.txt
+    $ pip freeze > requirements.txt
 
     ```
-
-How to create database
----------------------------------------------
-```
-$ python dbmanager.py
-```
