@@ -12,7 +12,7 @@ from sqlalchemy import create_engine, Table, MetaData, Column, types
 from sqlalchemy.orm import scoped_session, sessionmaker, mapper
 from sqlalchemy.orm.exc import NoResultFound
 
-engine = create_engine('mysql+pymysql://hungry:imhungry@localhost/sandwich?charset=utf8', encoding='utf-8')
+engine = create_engine('mysql+pymysql://root@localhost/sandwich?charset=utf8', encoding='utf-8')
 
 Session = scoped_session(sessionmaker(autocommit=False, autoflush=False,bind=engine))
 db_session = Session()
