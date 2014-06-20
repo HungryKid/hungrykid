@@ -7,7 +7,7 @@ class User(object):
         self.name = name
 
     def __repr__(self):
-		return "User<'%d','%s'>" % (self.id, self.name)
+	return "User<'%d','%s'>" % (self.id, self.name)
 
 
 metadata = MetaData()
