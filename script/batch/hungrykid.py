@@ -48,7 +48,7 @@ shops = Table('shop', metadata,
 mapper(Shop, shops)
 metadata.create_all(engine)
 
-def getFood(url):
+def getFoodWithCategory(url, category):
     # 1loop can get 20shops. 20x3loop=60shops are google place api restriction 
     maxloop = 3 
     sleeptime = 3
@@ -73,7 +73,7 @@ def getFood(url):
             try:
                 db_session.query(Shop).filter(Shop.id == shop["id"]).one()
             except NoResultFound:
-                db_session.add(Shop(shop["id"], shop["name"], kw, shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"]))
+                db_session.add(Shop(shop["id"], shop["name"], category, shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"]))
                 db_session.commit()
             except:
                 print "UNKNOWN DB ERROR"
@@ -85,10 +85,11 @@ def getFood(url):
             #print "= Next page Not Found:", e.message 
             break
         count += 1
-    print kw.strip("\n"), ":", shopcount, "shops found"
+    print category, ":", shopcount, "shops found"
 
 kwlist = codecs.open("keyword.txt", "r", "utf-8")
 
 for kw in kwlist:
+    kw = kw.rstrip()
     encodedkw = urllib2.quote(kw.encode("utf-8")) + "&"
-    getFood(apiurl+parameter+encodedkw+key)
+    getFoodWithCategory(apiurl+parameter+encodedkw+key, kw)
