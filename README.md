@@ -51,8 +51,8 @@ How to setup local development environment
 
         # install perl
         $ plenv available
-        $ plenv install 5.18.2 —-as 5.18
-        $ plenv global 5.18
+        $ plenv install 5.20.0 —-as 5.20
+        $ plenv global 5.20
         $ plenv rehash
         $ plenv versions
 
@@ -65,8 +65,8 @@ How to setup local development environment
 2. Clone this repository
 
     ```
-    $ git clone git@github.com:wata/sandwich.git
-    $ cd sandwich
+    $ git clone git@github.com:HungryKid/hungrykid.git
+    $ cd hungrykid
     ```
 3. Install python module dependency
 
@@ -87,7 +87,7 @@ How to setup local development environment
 
     ...
 
-    127.0.0.1 sandwich.com
+    127.0.0.1 local.hungrykid.me
     ```
 
 How to start local server
@@ -102,3 +102,12 @@ $ python index.py
     $ pip freeze > requirements.txt
 
     ```
+
+Daiku commands
+------------------------------------------
+
+```
+$ daiku -T
+daiku db:setup     # データベースのセットアップ
+daiku batch:crawl  # ショップデータのクローリング
+```
