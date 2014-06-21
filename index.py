@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.join(root_dir, 'config'))
 #import production as config
 import development as config
 
-from flask import Flask, render_template, redirect, request, session, url_for, Response, jsonify
+from flask import Flask, render_template, redirect, request, session, url_for, Response, jsonify, make_response
 import urllib
 import urllib2
 import json
@@ -20,8 +20,7 @@ from shop import Shop
 from __init__ import db_session
 
 app = Flask(__name__)
-app.secret_key = config.SECRET_KEY # TODO CHANGE THIS KEY(for Production Environment)
-
+app.secret_key = config.SECRET_KEY
 FACEBOOK_APP_ID = config.FACEBOOK_APP_ID
 FACEBOOK_APP_SECRET = config.FACEBOOK_APP_SECRET
 
@@ -65,7 +64,6 @@ def getshoplist():
     shops = db_session.query(Shop)[0:10]
     shoplist = []
     for row in shops:
-        # TODO: encoding
         shopdict = {}
         shopdict["id"] = row.id
         shopdict["name"] = row.name
@@ -73,8 +71,10 @@ def getshoplist():
         shopdict["lat"] = row.latitude
         shopdict["lng"] = row.longitude
         shoplist.append(shopdict)
-    response = jsonify({'results' : shoplist})
+    shopjson = json.dumps({'results' : shoplist}, ensure_ascii=False, indent=2)
+    response = make_response(shopjson)
     response.status_code = 200
+    response.headers['Content-type'] = "application/json; charset='utf-8'"
     return response
 
 ##### LOGIN/OUT #####
