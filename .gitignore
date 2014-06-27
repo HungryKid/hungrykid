@@ -45,3 +45,5 @@ docs/_build/
 
 config/development.py
 config/production.py
+
+venv
