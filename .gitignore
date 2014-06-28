@@ -47,3 +47,5 @@ config/development.py
 config/production.py
 
 *.swp
+
+venv

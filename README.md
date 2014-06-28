@@ -1,7 +1,9 @@
 HungryKid
 ====================
 
-![NUCOA MARGERINE, KIDS ON SWING by George Eastman House, on Flickr](https://farm4.staticflickr.com/3113/3122866921_5384bfae46_m.jpg "NUCOA MARGERINE, KIDS ON SWING by George Eastman House, on Flickr")
+[![wercker status](https://app.wercker.com/status/c8f03971061aefe06f7e5db2b39cf274/m "wercker status")](https://app.wercker.com/project/bykey/c8f03971061aefe06f7e5db2b39cf274)
+
+![Puppy hungry "Big Bone" by Jack Fiallos, on Flickr](https://c2.staticflickr.com/2/1070/540747396_5542b42cca_m.jpg "Puppy hungry "Big Bone" by Jack Fiallos, on Flickr")
 
 How to setup local development environment
 ---------------------------------------------

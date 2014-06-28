@@ -2,8 +2,16 @@ Flask==0.10.1
 Jinja2==2.7.2
 MarkupSafe==0.23
 PyMySQL==0.6.2
+PyYAML==3.11
 SQLAlchemy==0.9.4
 Werkzeug==0.9.4
+blessings==1.5.1
+docopt==0.6.2
+dulwich==0.9.7
+humanize==0.5
 itsdangerous==0.24
+requests==2.3.0
+semantic-version==2.3.0
 uWSGI==2.0.4
+wercker==0.8.3
 wsgiref==0.1.2

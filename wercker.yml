@@ -1,0 +1,20 @@
+box: wercker/python
+build:
+    steps:
+        - virtualenv:
+            name: setup virtual environment
+
+        - pip-install:
+            requirements_file: "requirements.txt"
+
+        - script:
+            name: echo python information
+            code: |
+              echo "python version $(python --version) running"
+              echo "pip version $(pip --version) running"
+
+    after-steps:
+        - hipchat-notify:
+            token: $HIPCHAT_TOKEN
+            room-id: 661882
+            from-name: wercker
