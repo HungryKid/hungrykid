@@ -61,7 +61,11 @@ def getUserFromFB():
 ###### API ######
 @app.route('/api/getshoplist')
 def getshoplist():
-    shops = db_session.query(Shop)[0:10]
+    typequery = request.args.get('type', '')
+    if typequery:
+        shops = db_session.query(Shop).filter(Shop.type == typequery)
+    else:
+        shops = db_session.query(Shop)[0:10]
     shoplist = []
     for row in shops:
         shopdict = {}

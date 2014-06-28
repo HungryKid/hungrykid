@@ -16,7 +16,7 @@ key = 'xxx' # insert google api key here
 apiurl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
 parameter = 'location=35.6571942,139.7093825&radius=500&types=restaurant&sensor=false&keyword='
 
-engine = create_engine('mysql+pymysql://root@localhost/sandwich?charset=utf8', encoding='utf-8')
+engine = create_engine('mysql+pymysql://root@localhost/sandwich?charset=utf8')
 
 Session = scoped_session(sessionmaker(autocommit=False, autoflush=False,bind=engine))
 db_session = Session()
