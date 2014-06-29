@@ -48,4 +48,5 @@ config/production.py
 
 *.swp
 
-venv
+/venv/
+/local/

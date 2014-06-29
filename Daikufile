@@ -32,19 +32,31 @@ namespace venv => sub {
 };
 
 namespace pip => sub {
-    desc '依存モジュールのインストール';
+    desc '（Python）依存モジュールのインストール';
     task install => sub {
         sh qw(pip install -r requirements.txt);
     };
 
-    desc '依存モジュールの一括更新';
+    desc '（Python）依存モジュールのアップデート';
     task update => sub {
         sh qw(pip install -r requirements.txt -U);
     };
 
-    desc '依存モジュールの凍結';
+    desc '（Python）依存モジュールの凍結';
     task freeze => sub {
         sh 'pip freeze > requirements.txt';
+    };
+};
+
+namespace carton => sub {
+    desc '（Perl）依存モジュールのインストール';
+    task install => sub {
+        sh qw(carton install);
+    };
+
+    desc '（Perl）依存モジュールのアップデート';
+    task update => sub {
+        sh qw(carton update);
     };
 };
 
