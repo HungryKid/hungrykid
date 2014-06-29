@@ -1,3 +1,10 @@
+namespace gunicorn => sub {
+    desc 'サーバ（app）起動';
+    task start => sub {
+        sh qw(gunicorn index:app);
+    };
+};
+
 namespace db => sub {
     desc 'データベースのセットアップ';
     task setup => sub {
@@ -9,6 +16,35 @@ namespace batch => sub {
     desc 'ショップデータのクローリング';
     task crawl => sub {
         sh 'script/batch/hungrykid.py';
+    };
+};
+
+namespace venv => sub {
+    desc 'プロジェクト用Python仮想環境の作成';
+    task init => sub {
+        sh qw(virtualenv venv --distribute);
+    };
+
+    desc 'プロジェクト用Python仮想環境の有効化';
+    task activate => sub {
+        sh qw(source venv/bin/activate);
+    };
+};
+
+namespace pip => sub {
+    desc '依存モジュールのインストール';
+    task install => sub {
+        sh qw(pip install -r requirements.txt);
+    };
+
+    desc '依存モジュールの一括更新';
+    task update => sub {
+        sh qw(pip install -r requirements.txt -U);
+    };
+
+    desc '依存モジュールの凍結';
+    task freeze => sub {
+        sh 'pip freeze > requirements.txt';
     };
 };
 
