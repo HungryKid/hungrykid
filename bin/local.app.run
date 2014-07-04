@@ -1,6 +1,7 @@
 #!/bin/sh
 
 export APPROOT=$(dirname $0)/../
+export HUNGRYKID_CONFIG=$APPROOT/hungrykid/config/development.py
 source $APPROOT/venv/bin/activate
 cd $APPROOT || exit 1
 

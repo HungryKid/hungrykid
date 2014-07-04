@@ -3,7 +3,6 @@
 
 import sys
 import os
-import config.development as config
 
 from hungrykid import app, db_session
 from models.shop import Shop
@@ -15,10 +14,10 @@ import urllib2
 import json
 from sqlalchemy.orm.exc import NoResultFound
 
-FACEBOOK_APP_ID = config.FACEBOOK_APP_ID
-FACEBOOK_APP_SECRET = config.FACEBOOK_APP_SECRET
+FACEBOOK_APP_ID = app.config['FACEBOOK_APP_ID']
+FACEBOOK_APP_SECRET = app.config['FACEBOOK_APP_SECRET']
 
-SITE_URL = config.SITE_URL
+SITE_URL = app.config['SITE_URL']
 
 @app.route('/')
 def index():
