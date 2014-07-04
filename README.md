@@ -73,7 +73,7 @@ How to setup local development environment
 3. Install python module dependency
 
     ```
-    $ pip install -r requirements.txt
+    $ daiku pip:install
     ```
 
 4. Setup DB
@@ -89,7 +89,7 @@ How to setup local development environment
 
     ...
 
-    127.0.0.1 local.hungrykid.me
+    127.0.0.1 hungrykid.me
     ```
 
 How to start local server
