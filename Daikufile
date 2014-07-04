@@ -1,21 +1,21 @@
-namespace gunicorn => sub {
-    desc 'サーバ（app）起動';
+namespace server => sub {
+    desc 'サーバ起動';
     task start => sub {
-        sh qw(gunicorn index:app);
+        sh qw(foreman start);
     };
 };
 
 namespace db => sub {
     desc 'データベースのセットアップ';
     task setup => sub {
-        sh 'script/setup_db.sh';
+        sh './setup_db.sh';
     };
 };
 
 namespace batch => sub {
     desc 'ショップデータのクローリング';
     task crawl => sub {
-        sh 'script/batch/hungrykid.py';
+        sh './beast.py';
     };
 };
 
@@ -25,10 +25,10 @@ namespace venv => sub {
         sh qw(virtualenv venv --distribute);
     };
 
-    desc 'プロジェクト用Python仮想環境の有効化';
-    task activate => sub {
-        sh qw(source venv/bin/activate);
-    };
+#    desc 'プロジェクト用Python仮想環境の有効化';
+#    task activate => sub {
+#        sh qw(source venv/bin/activate);
+#    };
 };
 
 namespace pip => sub {
