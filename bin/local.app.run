@@ -1,0 +1,7 @@
+#!/bin/sh
+
+export APPROOT=$(dirname $0)/../
+source $APPROOT/venv/bin/activate
+cd $APPROOT || exit 1
+
+gunicorn --reload -w 4 hungrykid:app

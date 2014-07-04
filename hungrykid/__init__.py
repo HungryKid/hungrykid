@@ -9,6 +9,7 @@ Session = scoped_session(sessionmaker(autocommit=False, autoflush=False,bind=eng
 db_session = Session()
 
 app = Flask(__name__)
+app.debug = True
 app.secret_key = config.SECRET_KEY
 
 import hungrykid.views
