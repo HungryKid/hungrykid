@@ -3,11 +3,11 @@
 
 import sys
 import os
-root_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(root_dir, 'config'))
+import config.development as config
 
-#import production as config
-import development as config
+from hungrykid import app, db_session
+from models.shop import Shop
+from models.user import User
 
 from flask import Flask, render_template, redirect, request, session, url_for, Response, jsonify, make_response
 import urllib
@@ -15,12 +15,6 @@ import urllib2
 import json
 from sqlalchemy.orm.exc import NoResultFound
 
-from user import User
-from shop import Shop
-from __init__ import db_session
-
-app = Flask(__name__)
-app.secret_key = config.SECRET_KEY
 FACEBOOK_APP_ID = config.FACEBOOK_APP_ID
 FACEBOOK_APP_SECRET = config.FACEBOOK_APP_SECRET
 
@@ -113,9 +107,3 @@ def not_found(error):
 @app.errorhandler(500)
 def internal_server_error(error):
     return render_template('500.html'), 500
-
-if __name__ == '__main__':
-    # If you enable debug support the server will reload itself on code changes
-    # REMEMBER: You must not forget comment out below when deploy to production
-    app.debug = True
-    app.run()

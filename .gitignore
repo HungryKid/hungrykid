@@ -43,8 +43,8 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-config/development.py
-config/production.py
+hungrykid/config/development.py
+hungrykid/config/production.py
 
 *.swp
 
