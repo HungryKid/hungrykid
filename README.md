@@ -96,12 +96,12 @@ How to start local server
 ---------------------------------------------
 
 ```
-$ python index.py
+$ daiku server:start
 ```
 
 * Update dependency
     ```
-    $ pip freeze > requirements.txt
+    $ daiku pip:freeze
 
     ```
 
@@ -110,6 +110,13 @@ Daiku commands
 
 ```
 $ daiku -T
-daiku db:setup     # データベースのセットアップ
-daiku batch:crawl  # ショップデータのクローリング
+daiku server:start    # サーバ起動
+daiku db:setup        # データベースのセットアップ
+daiku batch:crawl     # ショップデータのクローリング
+daiku venv:init       # プロジェクト用Python仮想環境の作成
+daiku pip:install     # （Python）依存モジュールのインストール
+daiku pip:update      # （Python）依存モジュールのアップデート
+daiku pip:freeze      # （Python）依存モジュールの凍結
+daiku carton:install  # （Perl）依存モジュールのインストール
+daiku carton:update   # （Perl）依存モジュールのアップデート
 ```
