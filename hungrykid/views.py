@@ -28,15 +28,13 @@ def index():
     
     return render_template('index.html', user=user)
 
-# TODO
-@app.route('/help')
-def help():
-    return 'This is help page'
-
-# TODO
-@app.route('/user/<username>')
-def userpage(username):
-    return render_template('userpage.html')
+@app.route('/settings')
+def settings():
+    access_token = session.get('access_token')
+    if not access_token is None:
+        return render_template('settings.html', user=getUserFromFB())
+    else:
+        return redirect(url_for('index'))
 
 def getUserFromFB():
     response = urllib2.urlopen('https://graph.facebook.com/me?' + session.get('access_token'))
@@ -86,7 +84,7 @@ def login():
     response = urllib.urlopen("https://graph.facebook.com/oauth/access_token?" + urllib.urlencode(args))
     print "res:", response
     session['access_token'] = response.read()
-    return redirect(SITE_URL)
+    return redirect(url_for('settings'))
 
 
 @app.route('/logout')
@@ -95,7 +93,6 @@ def logout():
     session.pop('userinfo', None)
     #flash('You were logged out')
     return redirect(url_for('index'))
-
 
 ###### ERROR HANDLER #####
 @app.errorhandler(404)
