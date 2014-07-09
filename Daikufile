@@ -24,11 +24,6 @@ namespace venv => sub {
     task init => sub {
         sh qw(virtualenv venv --distribute);
     };
-
-#    desc 'プロジェクト用Python仮想環境の有効化';
-#    task activate => sub {
-#        sh qw(source venv/bin/activate);
-#    };
 };
 
 namespace pip => sub {
