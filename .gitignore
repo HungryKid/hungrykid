@@ -51,3 +51,6 @@ hungrykid/config/production.py
 
 /venv/
 /local/
+
+# pyenv
+.python-version

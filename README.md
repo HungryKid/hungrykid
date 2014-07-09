@@ -18,7 +18,8 @@ How to setup local development environment
     * python - pyenv, virtualenv, pip
         ```
         # install pyenv
-        $ git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+        $ brew install pyenv
+        $ brew install pyenv-virtualenv
         $ echo 'export PYENV_ROOT="${HOME}/.pyenv"' >> ~/.zshrc
         $ echo 'if [ -d "${PYENV_ROOT}" ]; then' >> ~/.zshrc
         $ echo '    export PATH=${PYENV_ROOT}/bin:$PATH' >> ~/.zshrc
@@ -26,18 +27,12 @@ How to setup local development environment
         $ echo 'fi' >> ~/.zshrc
         $ exec $SHELL -l
 
-        # install pyenv-virtualenv
-        $ git clone git://github.com/yyuu/pyenv-virtualenv.git  ~/.pyenv/plugins/pyenv-virtualenv
+        # configure pyenv
+        $ pyenv install 2.7.7
+        $ pyenv virtualenv 2.7.7 hungryenv
+        $ cd <hungrykid directory>
+        $ pyenv local hungryenv
 
-        # install pyenv-pip-rehash
-        $ git clone git://github.com/yyuu/pyenv-pip-rehash.git ~/.pyenv/plugins/pyenv-pip-rehash
-
-        # install python
-        $ pyenv install -l
-        $ pyenv install 2.7.6
-        $ pyenv global 2.7.6
-        $ pyenv rehash
-        $ pyenv versions
         ```
     * perl - plenv(w/ perl-build), cpanm, carton, daiku, cinnamon
         ```
