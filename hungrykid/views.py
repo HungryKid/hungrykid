@@ -9,10 +9,11 @@ from models.shop import Shop
 from models.user import User
 
 from flask import Flask, render_template, redirect, request, session, url_for, Response, jsonify, make_response
+from sqlalchemy.orm.exc import NoResultFound
 import urllib
 import urllib2
 import json
-from sqlalchemy.orm.exc import NoResultFound
+import random
 
 FACEBOOK_APP_ID = app.config['FACEBOOK_APP_ID']
 FACEBOOK_APP_SECRET = app.config['FACEBOOK_APP_SECRET']
@@ -53,7 +54,7 @@ def getshoplist():
     if typequery:
         shops = db_session.query(Shop).filter(Shop.type == typequery)
     else:
-        shops = db_session.query(Shop)[0:10]
+        shops = db_session.query(Shop)
     shoplist = []
     for row in shops:
         shopdict = {}
@@ -63,7 +64,15 @@ def getshoplist():
         shopdict["lat"] = row.latitude
         shopdict["lng"] = row.longitude
         shoplist.append(shopdict)
-    shopjson = json.dumps({'results' : shoplist}, ensure_ascii=False, indent=2)
+
+    shopcount = len(shoplist)
+    recommend = []
+    for num in range(0, 10):
+        picknum = random.randint(0, shopcount-1)
+        recommend.append(shoplist.pop(picknum))
+        shopcount -= 1
+
+    shopjson = json.dumps({'results' : recommend}, ensure_ascii=False, indent=2)
     response = make_response(shopjson)
     response.status_code = 200
     response.headers['Content-type'] = "application/json; charset='utf-8'"
