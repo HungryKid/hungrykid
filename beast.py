@@ -7,7 +7,7 @@ import urllib2
 import json
 import time
 import codecs
-from hungrykid.config.development import GOOGLE_API_KEY
+from hungrykid import app
 from hungrykid import db_session
 from hungrykid.models.shop import Shop
 
@@ -15,7 +15,7 @@ from sqlalchemy import create_engine, Table, MetaData, Column, types
 from sqlalchemy.orm import scoped_session, sessionmaker, mapper
 from sqlalchemy.orm.exc import NoResultFound
 
-key = "key=" + GOOGLE_API_KEY
+key = "key=" + app.config['GOOGLE_API_KEY']
 apiurl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
 parameter = 'location=35.6571942,139.7093825&radius=500&types=restaurant&sensor=false&keyword='
 
