@@ -1,1 +1,1 @@
-app: ./bin/local.app.run
+app: ./bin/development.app.run

@@ -2,7 +2,6 @@
 
 export APPROOT=$(dirname $0)/../
 export HUNGRYKID_CONFIG=$APPROOT/hungrykid/config/development.py
-source $APPROOT/venv/bin/activate
 cd $APPROOT || exit 1
 
 gunicorn --reload -w 4 hungrykid:app

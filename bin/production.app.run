@@ -1,0 +1,8 @@
+#!/bin/sh
+
+export APPROOT=/home/app/hungrykid
+export HUNGRYKID_CONFIG=$APPROOT/hungrykid/config/production.py
+source home/app/python2.7/bin/activate
+cd $APPROOT || exit 1
+
+gunicorn -w 4 hungrykid:app
