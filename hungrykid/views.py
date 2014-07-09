@@ -21,20 +21,17 @@ SITE_URL = app.config['SITE_URL']
 
 @app.route('/')
 def index():
-    access_token = session.get('access_token')
-    user = None
-    if not access_token is None:
-        user = getUserFromFB()
-    
-    return render_template('index.html', user=user)
+    if session.get('access_token') is None:
+        return render_template('index.html')
+    else:
+        return redirect(url_for('settings'))
 
 @app.route('/settings')
 def settings():
-    access_token = session.get('access_token')
-    if not access_token is None:
-        return render_template('settings.html', user=getUserFromFB())
-    else:
+    if session.get('access_token') is None:
         return redirect(url_for('index'))
+    else:
+        return render_template('settings.html', user=getUserFromFB())
 
 def getUserFromFB():
     response = urllib2.urlopen('https://graph.facebook.com/me?' + session.get('access_token'))

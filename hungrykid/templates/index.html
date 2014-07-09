@@ -40,11 +40,11 @@ a.btn span {
 HungryKid
 
 <main>
-    <h2>It's that simple.</h2>
+    <h2>Good food makes your life better.</h2>
     <ul>
         <li><a href="javascript:void(0);" class="btn disabled"><span>Download it from</span><br>App Store</a></li><!--
         --><li><a href="javascript:void(0);" class="btn disabled"><span>Download it from</span><br>Google Play</a></li><!--
-        --><li>{% if session.access_token %}<a href="{{ url_for('logout') }}" class="btn"><br>Logout</a>{% else %}<a href="{{ url_for('login') }}" class="btn"><span>Facebook</span><br>Login</a>{% endif %}</li>
+        --><li><a href="{{ url_for('login') }}" class="btn"><span>Facebook</span><br>Login</a></li>
     </ul>
 </main>
 {%- endblock %}
