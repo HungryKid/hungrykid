@@ -13,7 +13,6 @@ How to setup local development environment
         ```
         # install homebrew on mac os
         $ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
-
         ```
     * python - pyenv, virtualenv, pip
         ```
@@ -32,7 +31,6 @@ How to setup local development environment
         $ pyenv virtualenv 2.7.7 hungryenv
         $ cd <hungrykid directory>
         $ pyenv local hungryenv
-
         ```
     * perl - plenv(w/ perl-build), cpanm, carton, daiku, cinnamon
         ```
