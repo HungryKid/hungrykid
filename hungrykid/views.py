@@ -36,7 +36,7 @@ def settings():
         return render_template('settings.html', user=getUserFromFB())
 
 def getUserFromFB():
-    response = urllib2.urlopen('https://graph.facebook.com/me?' + session.get('access_token'))
+    response = urllib2.urlopen(FACEBOOK_URL + 'me?' + session.get('access_token'))
     user_json = json.loads(response.read())
     id = user_json["id"]
     try:
@@ -68,7 +68,7 @@ def getshoplist():
 
     shopcount = len(shoplist)
     recommend = []
-    for num in range(0, 10):
+    for num in range(10):
         picknum = random.randint(0, shopcount-1)
         recommend.append(shoplist.pop(picknum))
         shopcount -= 1
@@ -85,11 +85,10 @@ def login():
     code = request.args.get('code')
     args = dict(client_id=FACEBOOK_APP_ID, redirect_uri=SITE_URL+"login")
     if code is None:
-        return redirect("https://graph.facebook.com/oauth/authorize?" + urllib.urlencode(args))
+        return redirect(FACEBOOK_URL + "oauth/authorize?" + urllib.urlencode(args))
     args["client_secret"] = FACEBOOK_APP_SECRET
     args["code"] = code
-    response = urllib.urlopen("https://graph.facebook.com/oauth/access_token?" + urllib.urlencode(args))
-    print "res:", response
+    response = urllib.urlopen(FACEBOOK_URL + "oauth/access_token?" + urllib.urlencode(args))
     session['access_token'] = response.read()
     return redirect(url_for('settings'))
 
@@ -98,7 +97,6 @@ def login():
 def logout():
     session.pop('access_token', None)
     session.pop('userinfo', None)
-    #flash('You were logged out')
     return redirect(url_for('index'))
 
 ###### ERROR HANDLER #####
