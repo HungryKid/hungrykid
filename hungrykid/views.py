@@ -17,6 +17,7 @@ import random
 
 FACEBOOK_APP_ID = app.config['FACEBOOK_APP_ID']
 FACEBOOK_APP_SECRET = app.config['FACEBOOK_APP_SECRET']
+FACEBOOK_URL = 'https://graph.facebook.com/'
 
 SITE_URL = app.config['SITE_URL']
 
