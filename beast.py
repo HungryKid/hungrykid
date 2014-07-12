@@ -15,6 +15,8 @@ from sqlalchemy import create_engine, Table, MetaData, Column, types
 from sqlalchemy.orm import scoped_session, sessionmaker, mapper
 from sqlalchemy.orm.exc import NoResultFound
 
+KEYWORDLIST_PATH = 'keyword.txt'
+
 key = "key=" + app.config['GOOGLE_API_KEY']
 apiurl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
 parameter = 'location=35.6571942,139.7093825&radius=500&types=restaurant&sensor=false&keyword='
@@ -47,7 +49,7 @@ def getFoodWithCategory(url, category):
                 db_session.add(Shop(shop["id"], shop["name"], category, shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"]))
                 db_session.commit()
             except:
-                print "UNKNOWN DB ERROR"
+                print "Unexpected error"
             shopcount += 1
 
         try:
@@ -58,7 +60,7 @@ def getFoodWithCategory(url, category):
         count += 1
     print category, ":", shopcount, "shops found"
 
-kwlist = codecs.open("keyword.txt", "r", "utf-8")
+kwlist = codecs.open(KEYWORDLIST_PATH, "r", "utf-8")
 
 for kw in kwlist:
     kw = kw.rstrip()
