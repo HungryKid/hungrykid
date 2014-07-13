@@ -51,9 +51,13 @@ label {
 
 #loader {
     display: none;
+    width: 20px;
+    height: 20px;
+    background-image: url(/static/img/loading.gif);
+    background-size: 20px 20px;
 }
 #loader.show {
-    display: block;
+    display: inline-block;
 }
 </style>
 {%- endblock %}
@@ -65,7 +69,7 @@ Welcome to<br>HungryKid !
     <p>
         <label for="subscribe">Subscribe kondate</label><br>
         <input type="checkbox" name="subscribe" value="true" id="subscribe">
-        <div id="loader"></div>
+        <span id="loader"></span>
     </p>
 
     <p>
@@ -92,11 +96,11 @@ Welcome to<br>HungryKid !
 
     function changeSetting() {
         showLoader();
-        console.log({ 'subscribe': $subscribe.value });
+        console.log({ 'subscribe': $subscribe.checked });
         hideLoader();
     }
 
-    $subscribe.addEventListener('onchange', changeSetting);
+    $subscribe.addEventListener('change', changeSetting);
 })();
 </script>
 {%- endblock %}
