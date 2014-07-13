@@ -30,7 +30,7 @@ label {
     background: #fff;
 }
 [type=checkbox]:checked {
-    box-shadow: inset 0px 0px 0px 20px #16C66D;
+    box-shadow: inset 0px 0px 0px 20px #16c66d;
 }
 [type=checkbox]:after {
     box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
@@ -48,6 +48,13 @@ label {
 [type="checkbox"]:checked:after {
     left: 22px;
 }
+
+#loader {
+    display: none;
+}
+#loader.show {
+    display: block;
+}
 </style>
 {%- endblock %}
 
@@ -58,9 +65,38 @@ Welcome to<br>HungryKid !
     <p>
         <label for="subscribe">Subscribe kondate</label><br>
         <input type="checkbox" name="subscribe" value="true" id="subscribe">
+        <div id="loader"></div>
     </p>
+
     <p>
         <a href="{{ url_for('logout') }}" class="btn">Logout</a>
     </p>
 </main>
+{%- endblock %}
+
+{% block beforebody -%}
+<script>
+(function(){
+    'use strict';
+
+    var $loader = document.querySelector('#loader'),
+        $subscribe = document.querySelector('#subscribe');
+
+    function showLoader() {
+        $loader.classList.add('show');
+    }
+
+    function hideLoader() {
+        $loader.classList.remove('show');
+    }
+
+    function changeSetting() {
+        showLoader();
+        console.log({ 'subscribe': $subscribe.value });
+        hideLoader();
+    }
+
+    $subscribe.addEventListener('onchange', changeSetting);
+})();
+</script>
 {%- endblock %}

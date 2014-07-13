@@ -11,4 +11,5 @@ echo ''
 echo 'setup hungrykid db ...'
 python manager.py
 
+echo ''
 echo 'done.'
