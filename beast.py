@@ -15,27 +15,27 @@ from sqlalchemy import create_engine, Table, MetaData, Column, types
 from sqlalchemy.orm import scoped_session, sessionmaker, mapper
 from sqlalchemy.orm.exc import NoResultFound
 
+import random
+
 KEYWORDLIST_PATH = 'keyword.txt'
+# 1loop can get 20shops. 20x3loop=60shops are google place api restriction 
+LOOPNUM = 3 
+SLEEPSEC = 3
 
 key = "key=" + app.config['GOOGLE_API_KEY']
 apiurl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
 parameter = 'location=35.6571942,139.7093825&radius=500&types=restaurant&sensor=false&keyword='
 
 def getFoodWithCategory(url, category):
-    # 1loop can get 20shops. 20x3loop=60shops are google place api restriction 
-    maxloop = 3 
-    sleeptime = 3
-    
     count = 0
     shopcount = 0
     nextpage = None
-    while count < maxloop:
+    while count < LOOPNUM:
         if nextpage is None:
             response = urllib2.urlopen(url)
         else:
             # if urlopen immediately, INVALID_REQUEST response return.
-            time.sleep(sleeptime)
-            #print "url:",apiurl+nextpage+parameter+key
+            time.sleep(SLEEPSEC)
             response = urllib2.urlopen(url)
         jsonplace = json.loads(response.read())
         jsonlist = jsonplace['results']
@@ -44,11 +44,13 @@ def getFoodWithCategory(url, category):
             keys = shop.keys()
             info = []
             try:
-                db_session.query(Shop).filter(Shop.id == shop["id"]).one()
+                db_session.query(Shop).filter(Shop.shopid == shop["id"]).one()
             except NoResultFound:
-                db_session.add(Shop(shop["id"], shop["name"], category, shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"]))
+#                db_session.add(Shop(shop["id"], shop["name"], category, shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"], 5))
+                db_session.add(Shop(shop["id"], shop["name"], category, shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"], random.randint(0, 10)))
                 db_session.commit()
             except:
+                # TODO
                 print "Unexpected error"
             shopcount += 1
 

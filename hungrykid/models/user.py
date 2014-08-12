@@ -3,7 +3,7 @@ from sqlalchemy.orm import mapper
 
 class User(object):
     def __init__(self, id, name):
-        self.id = id
+        self.uid = id
         self.name = name
 
     def __repr__(self):
@@ -13,7 +13,8 @@ class User(object):
 metadata = MetaData()
 
 users = Table('user', metadata,
-    Column('id', types.BigInteger, primary_key=True),
+    Column('id', types.Integer, primary_key=True, autoincrement=True),
+    Column('uid', types.BigInteger, primary_key=True),
     Column('name', types.String(50)),
 )
 

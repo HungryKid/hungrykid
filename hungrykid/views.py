@@ -40,7 +40,7 @@ def getUserFromFB():
     user_json = json.loads(response.read())
     id = user_json["id"]
     try:
-        user = db_session.query(User).filter(User.id == id).one()
+        user = db_session.query(User).filter(User.uid == id).one()
     except NoResultFound:
         # TODO Use transaction
         db_session.add(User(id, user_json["name"]))
@@ -52,6 +52,7 @@ def getUserFromFB():
 @app.route('/api/getshoplist')
 def getshoplist():
     typequery = request.args.get('type', '')
+    # TODO if number of shops is enormous, this implements use enough memory
     if typequery:
         shops = db_session.query(Shop).filter(Shop.type == typequery)
     else:
@@ -59,17 +60,22 @@ def getshoplist():
     shoplist = []
     for row in shops:
         shopdict = {}
-        shopdict["id"] = row.id
+        shopdict["id"] = row.shopid
         shopdict["name"] = row.name
         shopdict["type"] = row.type
         shopdict["lat"] = row.latitude
         shopdict["lng"] = row.longitude
+        shopdict["weight"] = row.weight
         shoplist.append(shopdict)
 
     shopcount = len(shoplist)
     recommend = []
     for num in range(10):
-        picknum = random.randint(0, shopcount-1)
+        while True:
+          picknum = random.randint(0, shopcount-1)
+          val = random.randint(0, 10)
+          if shoplist[picknum]["weight"] > val:
+            break
         recommend.append(shoplist.pop(picknum))
         shopcount -= 1
 
@@ -77,6 +83,7 @@ def getshoplist():
     response = make_response(shopjson)
     response.status_code = 200
     response.headers['Content-type'] = "application/json; charset='utf-8'"
+    response.headers['Access-Control-Allow-Origin'] = "*"
     return response
 
 ##### LOGIN/OUT #####
