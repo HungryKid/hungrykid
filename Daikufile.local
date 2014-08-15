@@ -1,0 +1,58 @@
+use utf8;
+
+namespace server => sub {
+    desc '[local]サーバ起動';
+    task start => sub {
+        sh qw(foreman start);
+    };
+};
+
+namespace db => sub {
+    desc '[local]データベースのセットアップ';
+    task setup => sub {
+        sh './setup_db.sh';
+    };
+};
+
+namespace batch => sub {
+    desc '[local]ショップデータのクローリング';
+    task crawl => sub {
+        sh './beast.py';
+    };
+};
+
+namespace venv => sub {
+    desc '[local]プロジェクト用Python仮想環境の作成';
+    task init => sub {
+        sh qw(virtualenv venv --distribute);
+    };
+};
+
+namespace pip => sub {
+    desc '[local](Python)依存モジュールのインストール';
+    task install => sub {
+        sh qw(pip install -r requirements.txt);
+    };
+
+    desc '[local](Python)依存モジュールのアップデート';
+    task update => sub {
+        sh qw(pip install -r requirements.txt -U);
+    };
+
+    desc '[local](Python)依存モジュールの凍結';
+    task freeze => sub {
+        sh 'pip freeze > requirements.txt';
+    };
+};
+
+namespace carton => sub {
+    desc '[local](Perl)依存モジュールのインストール';
+    task install => sub {
+        sh qw(carton install);
+    };
+
+    desc '[local](Perl)依存モジュールのアップデート';
+    task update => sub {
+        sh qw(carton update);
+    };
+};

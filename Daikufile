@@ -1,57 +1,7 @@
-namespace server => sub {
-    desc 'サーバ起動';
-    task start => sub {
-        sh qw(foreman start);
-    };
-};
-
-namespace db => sub {
+namespace deploy => sub {
     desc 'データベースのセットアップ';
-    task setup => sub {
+    task db_setup => sub {
         sh './setup_db.sh';
-    };
-};
-
-namespace batch => sub {
-    desc 'ショップデータのクローリング';
-    task crawl => sub {
-        sh './beast.py';
-    };
-};
-
-namespace venv => sub {
-    desc 'プロジェクト用Python仮想環境の作成';
-    task init => sub {
-        sh qw(virtualenv venv --distribute);
-    };
-};
-
-namespace pip => sub {
-    desc '（Python）依存モジュールのインストール';
-    task install => sub {
-        sh qw(pip install -r requirements.txt);
-    };
-
-    desc '（Python）依存モジュールのアップデート';
-    task update => sub {
-        sh qw(pip install -r requirements.txt -U);
-    };
-
-    desc '（Python）依存モジュールの凍結';
-    task freeze => sub {
-        sh 'pip freeze > requirements.txt';
-    };
-};
-
-namespace carton => sub {
-    desc '（Perl）依存モジュールのインストール';
-    task install => sub {
-        sh qw(carton install);
-    };
-
-    desc '（Perl）依存モジュールのアップデート';
-    task update => sub {
-        sh qw(carton update);
     };
 };
 
