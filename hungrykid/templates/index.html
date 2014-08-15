@@ -3,48 +3,154 @@
 {% block head -%}
 <style>
 body {
+    background-color: #000;
     color: #fff;
-    background-color: #ff9933;
 }
-li {
-    display: inline-block;
-    margin-right: 10px;
+video {
+    position: fixed;
+    width: auto;
+    height: auto;
+    top: 0;
+    right: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    opacity: 0;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    transition: all .3s linear;
 }
-li:last-child { margin-right: 0; }
-a:link { color: #fff; }
-a:visited { color: #fff; }
-a:hover { color: #fff; }
-a:active { color: #fff; }
+main h1 {
+    margin: 0;
+    font-size: 64px;
+    font-weight: 100;
+}
+main p {
+    line-height: 32px;
+    margin-top: 12px;
+}
+.masthead {
+    background-image: url(/static/img/bg.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+}
+.container {
+    position: absolute;
+    right: auto;
+    left: 80px;
+}
+.blur {
+    background: inherit;
+}
+.blur:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: inherit;
+    -webkit-filter: blur(10px) saturate(2);
+    -moz-filter: blur(10px) saturate(2);
+    filter: blur(10px) saturate(2);
+    filter: url(/static/img/filters.xml#blur_saturate);
+}
+
+a:link,
+a:visited {
+    color: #fff;
+}
+
 a.btn {
-    display: block;
-    width: 250px;
-    height: 100px;
-    color: #ff9933;
-    font-size: 26px;
-    text-decoration: none;
-    background-color: #fff;
-    border-radius: 4px;
+    display: inline-block;
+    padding: 10px;
+    line-height: 1;
 }
 a.btn.disabled {
-    background-color: #ddd;
+    opacity: .3;
     cursor: default;
 }
+a.btn.disabled:hover,
+a.btn.disabled:focus,
+a.btn.disabled:active {
+    opacity: .3;
+}
+a.btn img,
 a.btn span {
-    font-size: 20px;
-    font-weight: 200;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+}
+a.btn span {
+    padding-left: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+    body {
+        font-size: 20px;
+    }
+    main h1 {
+        font-size: 50px;
+    }
+    .container {
+        left: 15px;
+    }
 }
 </style>
 {%- endblock %}
 
 {% block content -%}
-HungryKid
+<div class="masthead">
+    <div class="container">
+        <main>
+            <h1>HungryKid</h1>
+            <p>Good food makes your life better.</p>
+            <ul>
+                <li>
+                    <a href="javascript:void(0);" class="btn disabled">
+                        <img src="/static/img/login.png" width="35" height="35" alt="login">
+                        <span>iOS App</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="btn disabled">
+                        <img src="/static/img/login.png" width="35" height="35" alt="login">
+                        <span>Android App</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('login') }}" class="btn">
+                        <img src="/static/img/login.png" width="35" height="35" alt="login">
+                        <span>Web (Facebook Login)</span>
+                    </a>
+                </li>
+            </ul>
+        </main>
+    </div>
 
-<main>
-    <h2>Good food makes your life better.</h2>
-    <ul>
-        <li><a href="javascript:void(0);" class="btn disabled"><span>Download it from</span><br>App Store</a></li><!--
-        --><li><a href="javascript:void(0);" class="btn disabled"><span>Download it from</span><br>Google Play</a></li><!--
-        --><li><a href="{{ url_for('login') }}" class="btn"><span>Facebook</span><br>Login</a></li>
-    </ul>
-</main>
+    <div class="blur"></div>
+    <video id="video" poster="/static/img/bg.jpg" muted>
+        <source src="/static/video/bg.mp4">
+        <source src="/static/video/bg.webm">
+    </video>
+</div>
+{%- endblock %}
+
+{% block beforebody -%}
+<script>
+(function(){
+    'use strict';
+
+    var $video = document.querySelector('#video');
+ 
+    $video.addEventListener('loadedmetadata', function() {
+        $video.style.opacity = 1;
+        $video.play();
+    }, false);
+ 
+    $video.addEventListener('ended', function() {
+        $video.style.opacity = 0;
+    }, false);
+
+})();
+</script>
 {%- endblock %}

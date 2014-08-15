@@ -2,14 +2,58 @@
 
 {% block head -%}
 <style>
-label {
+body {
+    background-color: #f3f3f3;
+    background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+    background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+    background-image: linear-gradient(#f9f9f9, #f3f3f3);
+    background-repeat: repeat-x;
+}
+nav {
+    position: absolute;
+    top: 26px;
+    right: 15px;
+    font-size: 20px;
+}
+nav ul li {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 21px;
+}
+main {
+    text-align: center;
+}
+p {
+    margin: 0;
+    position: relative;
+}
+p + p {
+    margin-top: 30px;
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: inset 0px 0px 0px 1px #e6e6e6;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    font-size: 20px;
+    text-indent: 0.01px;
+    text-overflow: "";
     cursor: pointer;
+    display: inline-block;
+    height: 31px;
+    padding: 0 15px;
+    width: 71px;
+    outline: 0;
+    background: #fff;
+    vertical-align: middle;
 }
 [type=checkbox] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    box-shadow: inset 0px 0px 0px 1px #e6e6e6;
+    box-shadow: inset 0 0 0 1px #e6e6e6;
     border: 1px solid #ddd;
     border-radius: 15px;
     cursor: pointer;
@@ -17,7 +61,7 @@ label {
     height: 31px;
     padding: 1px;
     position: relative;
-    margin: 0px;
+    margin: 0;
     width: 52px;
     outline: 0;
     -webkit-transition: all 0.3s ease-out;
@@ -28,9 +72,10 @@ label {
     -o-transform: scale(1);
     transform: scale(1);
     background: #fff;
+    vertical-align: middle;
 }
 [type=checkbox]:checked {
-    box-shadow: inset 0px 0px 0px 20px #16c66d;
+    box-shadow: inset 0px 0px 0px 20px #51d56a;
 }
 [type=checkbox]:after {
     box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
@@ -48,34 +93,67 @@ label {
 [type="checkbox"]:checked:after {
     left: 22px;
 }
+a:link,
+a:visited {
+    color: #666;
+}
 
-#loader {
+#loader,
+#message {
     display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -7px;
+    margin-left: 46px;
+}
+#loader.show,
+#message.show {
+    display: block;
+}
+#loader {
     width: 20px;
     height: 20px;
     background-image: url(/static/img/loading.gif);
     background-size: 20px 20px;
 }
-#loader.show {
-    display: inline-block;
+#message {
+    font-size: 14px;
 }
 </style>
 {%- endblock %}
 
 {% block content -%}
-Welcome to<br>HungryKid !
+<div class="masthead">
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
 
-<main>
-    <p>
-        <label for="subscribe">Subscribe kondate</label><br>
-        <input type="checkbox" name="subscribe" value="true" id="subscribe">
-        <span id="loader"></span>
-    </p>
-
-    <p>
-        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-    </p>
-</main>
+        <main>
+            <p>
+                Send me three meals at
+                <select id="schedule" name="schedule">
+                    <option value="6">6:00</option>
+                    <option value="6.5">6:30</option>
+                    <option value="7">7:00</option>
+                    <option value="7.5">7:30</option>
+                    <option value="8" selected>8:00</option>
+                    <option value="8.5">8:30</option>
+                    <option value="9">9:00</option>
+                </select>
+                every morning.
+            </p>
+            <p>
+                <input type="checkbox" name="subscribe" value="true" id="subscribe">
+                <span id="loader"></span>
+                <span id="message"></span>
+            </p>
+        </main>
+    </div>
+</div>
 {%- endblock %}
 
 {% block beforebody -%}
@@ -84,7 +162,9 @@ Welcome to<br>HungryKid !
     'use strict';
 
     var $loader = document.querySelector('#loader'),
-        $subscribe = document.querySelector('#subscribe');
+        $subscribe = document.querySelector('#subscribe'),
+        $schedule = document.querySelector('#schedule'),
+        $message = document.querySelector('#message');
 
     function showLoader() {
         $loader.classList.add('show');
@@ -94,13 +174,26 @@ Welcome to<br>HungryKid !
         $loader.classList.remove('show');
     }
 
-    function changeSetting() {
+    function changeSetting(e) {
+        var $target = e.target;
         showLoader();
-        console.log({ 'subscribe': $subscribe.checked });
-        hideLoader();
+        $subscribe.disabled = true;
+
+        setTimeout(function (res) {
+            hideLoader();
+            //$message.innerText = 'Sent to hoge@example.com!';
+            $message.innerText = 'Saved!';
+            $message.classList.add('show');
+
+            setTimeout(function () {
+                $message.classList.remove('show');
+                $subscribe.disabled = false;
+            }, 2000);
+        }, 2000);
     }
 
     $subscribe.addEventListener('change', changeSetting);
+    $schedule.addEventListener('change', changeSetting);
 })();
 </script>
 {%- endblock %}
