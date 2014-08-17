@@ -3,6 +3,11 @@ namespace deploy => sub {
     task db_setup => sub {
         sh './setup_db.sh';
     };
+
+    desc '依存モジュールのインストール';
+    task carton_install => sub {
+        sh qw(carton install --deployment);
+    };
 };
 
 # 独自タスクは以下のファイルに定義すると捗りそう
