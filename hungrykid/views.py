@@ -19,8 +19,6 @@ FACEBOOK_APP_ID = app.config['FACEBOOK_APP_ID']
 FACEBOOK_APP_SECRET = app.config['FACEBOOK_APP_SECRET']
 FACEBOOK_URL = 'https://graph.facebook.com/'
 
-SITE_URL = app.config['SITE_URL']
-
 @app.route('/')
 def index():
     if session.get('access_token'):
@@ -90,7 +88,8 @@ def getshoplist():
 @app.route('/login')
 def login():
     code = request.args.get('code')
-    args = dict(client_id=FACEBOOK_APP_ID, redirect_uri=SITE_URL+"login")
+    uri = request.url_root + 'login'
+    args = dict(client_id=FACEBOOK_APP_ID, redirect_uri=uri)
     if code is None:
         return redirect(FACEBOOK_URL + "oauth/authorize?" + urllib.urlencode(args))
     args["client_secret"] = FACEBOOK_APP_SECRET
