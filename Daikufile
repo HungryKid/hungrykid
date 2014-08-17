@@ -4,9 +4,45 @@ namespace deploy => sub {
         sh './setup_db.sh';
     };
 
-    desc '依存モジュールのインストール';
+    desc '(Python)依存モジュールのインストール';
+    task pip_install => sub {
+        sh qw(pip install -r requirements.txt);
+    };
+
+    desc '(Perl)依存モジュールのインストール';
     task carton_install => sub {
         sh qw(carton install --deployment);
+    };
+
+    desc '開発環境にデプロイ';
+    task development => sub {
+        sh qw(cinnamon development deploy:update deploy:setup:config);
+    };
+
+    desc '開発環境に初回デプロイ';
+    task development_init => sub {
+        sh qw(cinnamon development deploy:setup:dir deploy:setup:db deploy:update deploy:setup:config);
+    };
+
+    desc '開発環境を停止';
+    task development_stop => sub {
+        sh qw(cinnamon development deploy:stop);
+    };
+
+    desc '本番環境にデプロイ';
+    task production => sub {
+        sh qw(cinnamon production deploy:update deploy:setup:config);
+    };
+
+    desc '本番環境に初回デプロイ';
+    task production_init => sub {
+        #sh qw(cinnamon production deploy:setup:dir deploy:setup:db deploy:update deploy:setup:config);
+        sh qw(cinnamon production deploy:setup:dir deploy:update deploy:setup:config);
+    };
+
+    desc '本番環境を停止';
+    task production_stop => sub {
+        sh qw(cinnamon production deploy:stop);
     };
 };
 
