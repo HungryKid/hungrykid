@@ -83,7 +83,7 @@ How to setup local development environment
 
     ...
 
-    127.0.0.1 hungrykid.me
+    127.0.0.1 local.hungrykid.me
     ```
 
 How to start local server
