@@ -57,7 +57,8 @@ def getshoplist():
         shops = db_session.query(Shop)
     shoplist = []
     for row in shops:
-        shoplist.append({"id": row.shopid, "name": row.name, "type": row.type, "lat": row.latitude, "lng": row.longitude, "weight": row.weight})
+        shoplist.append({"id": row.shopid, "name": row.name, "type": row.type,
+                         "lat": row.latitude, "lng": row.longitude, "weight": row.weight})
 
     shopcount = len(shoplist)
     recommend = []

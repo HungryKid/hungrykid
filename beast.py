@@ -46,8 +46,11 @@ def getFoodWithCategory(url, category):
             try:
                 db_session.query(Shop).filter(Shop.shopid == shop["id"]).one()
             except NoResultFound:
-#                db_session.add(Shop(shop["id"], shop["name"], category, shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"], 5))
-                db_session.add(Shop(shop["id"], shop["name"], category, shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"], random.randint(0, 10)))
+#                db_session.add(Shop(shop["id"], shop["name"], category,
+#                                shop["geometry"]["location"]["lat"], shop["geometry"]["location"]["lng"], 5))
+                db_session.add(Shop(shop["id"], shop["name"], category,
+                               shop["geometry"]["location"]["lat"],
+                               shop["geometry"]["location"]["lng"], random.randint(0, 10)))
                 db_session.commit()
             except:
                 # TODO
