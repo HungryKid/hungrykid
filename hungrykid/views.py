@@ -57,14 +57,7 @@ def getshoplist():
         shops = db_session.query(Shop)
     shoplist = []
     for row in shops:
-        shopdict = {}
-        shopdict["id"] = row.shopid
-        shopdict["name"] = row.name
-        shopdict["type"] = row.type
-        shopdict["lat"] = row.latitude
-        shopdict["lng"] = row.longitude
-        shopdict["weight"] = row.weight
-        shoplist.append(shopdict)
+        shoplist.append({"id": row.shopid, "name": row.name, "type": row.type, "lat": row.latitude, "lng": row.longitude, "weight": row.weight})
 
     shopcount = len(shoplist)
     recommend = []
@@ -98,7 +91,6 @@ def login():
     session['access_token'] = response.read()
     return redirect(url_for('settings'))
 
-
 @app.route('/logout')
 def logout():
     session.pop('access_token', None)
@@ -109,7 +101,6 @@ def logout():
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
-
 
 @app.errorhandler(500)
 def internal_server_error(error):
