@@ -96,6 +96,31 @@ def weightchange(shopid, num):
   response.headers['Access-Control-Allow-Origin'] = "*"
   return response
 
+@app.route('/meals/todays_menu', methods=['GET'])
+def todaysmenu():
+  shops = db_session.query(Shop)
+  shoplist = []
+  for row in shops:
+    shoplist.append({"id": row.shopid, "name": row.name, "type": row.type,
+      "lat": row.latitude, "lng": row.longitude, "weight": row.weight, "photo": row.photo, "url": row.url, "phone": row.phone})
+
+  shopcount = len(shoplist)
+  recommend = []
+  for num in range(3):
+    while True:
+      picknum = random.randint(0, shopcount-1)
+      val = random.randint(0, 10)
+      if shoplist[picknum]["weight"] > val:
+        break
+    recommend.append(shoplist.pop(picknum))
+    shopcount -= 1
+
+  shopjson = json.dumps({'results' : recommend}, ensure_ascii=False, indent=2)
+  response = make_response(shopjson)
+  response.status_code = 200
+  response.headers['Content-type'] = "application/json; charset='utf-8'"
+  response.headers['Access-Control-Allow-Origin'] = "*"
+  return response
 
 ##### LOGIN/OUT #####
 @app.route('/login')
