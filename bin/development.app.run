@@ -3,4 +3,4 @@
 export APPROOT=$(cd $(dirname $0)/../ && pwd)
 export HUNGRYKID_CONFIG=$APPROOT/hungrykid/config/development.py
 
-gunicorn --reload -w 4 hungrykid:app
+gunicorn --reload -w 4 -b 127.0.0.1:4000 hungrykid:app

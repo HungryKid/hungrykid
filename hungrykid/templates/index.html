@@ -6,19 +6,19 @@ body {
     background-color: #000;
     color: #fff;
 }
-video {
+/*video {
     position: fixed;
     width: auto;
     height: auto;
     top: 0;
     right: 0;
-    min-width: 100%; 
+    min-width: 100%;
     min-height: 100%;
     opacity: 0;
     -webkit-transition: all .3s linear;
     -moz-transition: all .3s linear;
     transition: all .3s linear;
-}
+}*/
 main h1 {
     margin: 0;
     font-size: 64px;
@@ -38,7 +38,7 @@ main p {
     right: auto;
     left: 80px;
 }
-.blur {
+/*.blur {
     background: inherit;
 }
 .blur:before {
@@ -53,7 +53,7 @@ main p {
     -moz-filter: blur(10px) saturate(2);
     filter: blur(10px) saturate(2);
     filter: url(/static/img/filters.xml#blur_saturate);
-}
+}*/
 
 a:link,
 a:visited {
@@ -127,30 +127,30 @@ a.btn span {
         </main>
     </div>
 
-    <div class="blur"></div>
+    <!-- <div class="blur"></div>
     <video id="video" poster="/static/img/bg.jpg" muted>
         <source src="/static/video/bg.mp4">
         <source src="/static/video/bg.webm">
-    </video>
+    </video> -->
 </div>
 {%- endblock %}
 
 {% block beforebody -%}
 <script>
-(function(){
-    'use strict';
-
-    var $video = document.querySelector('#video');
- 
-    $video.addEventListener('loadedmetadata', function() {
-        $video.style.opacity = 1;
-        $video.play();
-    }, false);
- 
-    $video.addEventListener('ended', function() {
-        $video.style.opacity = 0;
-    }, false);
-
-})();
+// (function(){
+//     'use strict';
+//
+//     var $video = document.querySelector('#video');
+//
+//     $video.addEventListener('loadedmetadata', function() {
+//         $video.style.opacity = 1;
+//         $video.play();
+//     }, false);
+//
+//     $video.addEventListener('ended', function() {
+//         $video.style.opacity = 0;
+//     }, false);
+//
+// })();
 </script>
 {%- endblock %}
