@@ -89,7 +89,8 @@ def addShop(shop,category):
     photourl = photoapiurl+key+photoparameter+photoreference
   # if photo isn't exist, emit KeyError
   except KeyError:
-    photourl = ""
+    #photourl = ""
+    return
 #  if photourl is not None:
   db_session.add(Shop(shop["id"], shop["name"], category,
                  shop["geometry"]["location"]["lat"],
