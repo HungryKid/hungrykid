@@ -102,7 +102,7 @@ def todaysmenu():
   shoplist = []
   for row in shops:
     shoplist.append({"id": row.shopid, "name": row.name, "type": row.type,
-      "lat": row.latitude, "lng": row.longitude, "weight": row.weight, "photo": row.photo, "url": row.url, "phone": row.phone})
+      "lat": row.latitude, "lng": row.longitude, "weight": row.weight, "photo": row.photo, "url": row.url, "phone": row.phone, "address": row.address, "date": str(row.date)})
 
   shopcount = len(shoplist)
   recommend = []

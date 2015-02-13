@@ -1,8 +1,9 @@
 from sqlalchemy import Table, MetaData, Column, types
 from sqlalchemy.orm import mapper
+import datetime
 
 class Shop(object):
-    def __init__(self, id, name, type, latitude, longitude, photo, weight,url, phone):
+    def __init__(self, id, name, type, latitude, longitude, photo, weight,url, phone,address):
         self.shopid = id
         self.name = name
         self.type = type
@@ -12,6 +13,7 @@ class Shop(object):
         self.weight = weight
         self.url = url
         self.phone = phone
+        self.address = address
     #def __repr__(self):
     #    return
     @classmethod
@@ -36,5 +38,8 @@ shops = Table('shop', metadata,
         Column('weight', types.Integer),
         Column('url', types.String(100)),
         Column('phone', types.String(20)),
+        Column('address', types.String(100)),
+        #Column('review', types.String(100)),
+        Column('date', types.DateTime, default=datetime.datetime.utcnow()),
         )
 mapper(Shop, shops)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 #
-# google place api crawler
+# google place api crawler/Users/n10o/.pyenv/shims/python
 #
 import urllib2
 import json
@@ -16,6 +16,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker, mapper
 from sqlalchemy.orm.exc import NoResultFound
 
 import random
+
 
 KEYWORDLIST_PATH = 'keyword.txt'
 # 1loop can get 20shops. 20x3loop=60shops are google place api restriction 
@@ -78,6 +79,10 @@ def addShop(shop,category):
     phone = shopdetail["formatted_phone_number"]
   except:
     phone = ""
+  try:
+    address = shopdetail["vicinity"]
+  except:
+    address = ""
 
   try:
     photoreference = shop["photos"][0]["photo_reference"]
@@ -89,7 +94,7 @@ def addShop(shop,category):
   db_session.add(Shop(shop["id"], shop["name"], category,
                  shop["geometry"]["location"]["lat"],
                  shop["geometry"]["location"]["lng"],
-                 photourl, random.randint(0, 10), url, phone))
+                 photourl, random.randint(0, 10), url, phone, address))
   db_session.commit()
 
 kwlist = codecs.open(KEYWORDLIST_PATH, "r", "utf-8")

@@ -54,3 +54,6 @@ hungrykid/config/production.py
 
 # pyenv
 .python-version
+
+# IDE
+.idea/
