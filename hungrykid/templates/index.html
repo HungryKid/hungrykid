@@ -38,6 +38,11 @@ main p {
     right: auto;
     left: 80px;
 }
+.mockup {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 /*.blur {
     background: inherit;
 }
@@ -80,19 +85,30 @@ a.btn span {
     vertical-align: middle;
     line-height: 1;
 }
+a.btn img {
+    width: 35px;
+    height: 35px;
+}
 a.btn span {
     padding-left: 10px;
 }
 
 @media only screen and (max-width: 767px) {
     body {
-        font-size: 20px;
+        font-size: 15px;
     }
     main h1 {
         font-size: 50px;
     }
+    main p {
+        font-size: 23px;
+    }
     .container {
         left: 15px;
+    }
+    a.btn img {
+        width: 25px;
+        height: 25px;
     }
 }
 </style>
@@ -103,28 +119,32 @@ a.btn span {
     <div class="container">
         <main>
             <h1>HungryKid</h1>
-            <p>Good food makes your life better.</p>
+            <p>おいしいごはんを食べよう。</p>
             <ul>
                 <li>
                     <a href="javascript:void(0);" class="btn disabled">
-                        <img src="/static/img/login.png" width="35" height="35" alt="login">
+                        <img src="/static/img/login.png" alt="iOS App">
                         <span>iOS App</span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript:void(0);" class="btn disabled">
-                        <img src="/static/img/login.png" width="35" height="35" alt="login">
+                        <img src="/static/img/login.png" alt="Android App">
                         <span>Android App</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ url_for('login') }}" class="btn">
-                        <img src="/static/img/login.png" width="35" height="35" alt="login">
+                        <img src="/static/img/login.png" alt="Web (Facebook Login)">
                         <span>Web (Facebook Login)</span>
                     </a>
                 </li>
             </ul>
         </main>
+
+        <div class="mockup">
+            <img src="/static/img/mockup.png" width="216" height="600">
+        </div>
     </div>
 
     <!-- <div class="blur"></div>
