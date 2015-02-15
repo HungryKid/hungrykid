@@ -9,15 +9,23 @@ How to setup local development environment
 ---------------------------------------------
 
 1. Preparations in advance
-    * homebrew  
+    * Homebrew  
         ```
-        # install homebrew on mac os
         $ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
+        ```
 
+    * Docker
+
+        Install `boot2docker` from [Releases · boot2docker/osx-installer](https://github.com/boot2docker/osx-installer/releases) and
         ```
-    * python - pyenv, virtualenv, pip
+        $ boot2docker init
+        $ boot2docker up
+        $ echo 'export DOCKER_HOST=tcp://$(boot2docker ip 2>/dev/null):2375' >> ~/.zshrc
         ```
-        # install pyenv
+
+    * Python - pyenv, virtualenv, pip
+        ```
+        # Install pyenv
         $ brew install pyenv
         $ brew install pyenv-virtualenv
         $ echo 'export PYENV_ROOT="${HOME}/.pyenv"' >> ~/.zshrc
@@ -27,15 +35,16 @@ How to setup local development environment
         $ echo 'fi' >> ~/.zshrc
         $ exec $SHELL -l
 
-        # configure pyenv
+        # Configure pyenv
         $ pyenv install 2.7.7
         $ pyenv virtualenv 2.7.7 hungryenv
         $ cd <hungrykid directory>
         $ pyenv local hungryenv
         ```
-    * perl - plenv(w/ perl-build), cpanm, carton, daiku, cinnamon
+
+    * Perl - plenv(w/ perl-build), cpanm, carton, daiku, cinnamon
         ```
-        # install plenv w/ perl-build
+        # Install plenv w/ perl-build
         $ git clone git://github.com/tokuhirom/plenv.git ~/.plenv
         $ git clone git://github.com/tokuhirom/Perl-Build.git ~/.plenv/plugins/perl-build/
         $ echo 'export PLENV_ROOT="${HOME}/.plenv"' >> ~/.zshrc
@@ -45,25 +54,26 @@ How to setup local development environment
         $ echo 'fi' >> ~/.zshrc
         $ exec $SHELL -l
 
-        # install perl
+        # Install perl
         $ plenv available
         $ plenv install 5.20.0 —-as 5.20
         $ plenv global 5.20
         $ plenv rehash
         $ plenv versions
 
-        # install cpanm
+        # Install cpanm
         $ plenv install-cpanm
 
-        # install daiku, cinnamon
+        # Install daiku, cinnamon
         $ plenv exec cpanm Daiku Cinnamon
         ```
-2. Clone this repository
 
+2. Clone this repository
     ```
     $ git clone git@github.com:HungryKid/hungrykid.git
     $ cd hungrykid
     ```
+
 3. Install python module dependency
 
     ```
@@ -86,6 +96,18 @@ How to setup local development environment
     127.0.0.1 local.hungrykid.me
     ```
 
+6. Setup ssh config
+    ```
+    $ vi ~/.ssh/config
+
+    ...
+
+    Host hungrykid
+    HostName __YOUR_HOST_NAME_HERE__
+    User __YOUR_NAME_HERE__
+    ForwardAgent yes
+    ```
+
 How to start local server
 ---------------------------------------------
 
@@ -93,24 +115,11 @@ How to start local server
 $ daiku server:start
 ```
 
+Tips
+---------------------------------------------
+
 * Update dependency
     ```
     $ daiku pip:freeze
 
     ```
-
-Daiku commands
-------------------------------------------
-
-```
-$ daiku -T
-daiku server:start    # サーバ起動
-daiku db:setup        # データベースのセットアップ
-daiku batch:crawl     # ショップデータのクローリング
-daiku venv:init       # プロジェクト用Python仮想環境の作成
-daiku pip:install     # （Python）依存モジュールのインストール
-daiku pip:update      # （Python）依存モジュールのアップデート
-daiku pip:freeze      # （Python）依存モジュールの凍結
-daiku carton:install  # （Perl）依存モジュールのインストール
-daiku carton:update   # （Perl）依存モジュールのアップデート
-```
