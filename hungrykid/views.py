@@ -43,6 +43,7 @@ def getUserFromFB():
     # TODO Use transaction
     db_session.add(User(id, user_json["name"]))
     db_session.commit()
+  db_session.close()
   return user_json
 
 ###### API ######
@@ -54,6 +55,7 @@ def getshoplist():
     shops = db_session.query(Shop).filter(Shop.type == typequery)
   else:
     shops = db_session.query(Shop)
+  db_session.close()
   shoplist = []
   for row in shops:
     shoplist.append({"id": row.shopid, "name": row.name, "type": row.type,
@@ -89,6 +91,7 @@ def weightchange(shopid, num):
   shop = db_session.query(Shop).filter(Shop.shopid == shopid).first()
   shop.weight = shop.weight + num
   db_session.commit()
+  db_session.close()
   result = make_response(json.dumps({'results' : 'success'}, ensure_ascii=False, indent=2))
   response = make_response(result)
   response.status_code = 200
@@ -103,7 +106,7 @@ def todaysmenu():
   for row in shops:
     shoplist.append({"id": row.shopid, "name": row.name, "type": row.type,
       "lat": row.latitude, "lng": row.longitude, "weight": row.weight, "photo": row.photo, "url": row.url, "phone": row.phone, "address": row.address, "date": str(row.date)})
-
+  db_session.close()
   shopcount = len(shoplist)
   recommend = []
   for num in range(3):
